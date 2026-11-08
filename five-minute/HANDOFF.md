@@ -15,12 +15,14 @@ Repository: `jamallarsen10-hub/gpt`, branch `codex/five-minute-limiter`, folder 
 - Portable manifest/source structure check passed with `bash five-minute/scripts/check.sh` in Linux.
 - Python validator syntax check passed.
 - Swift policy tests were SKIPPED locally: Linux runtime has no swiftc. macOS CI ran and PASSED all 12 policy checks using Xcode 16.4.
-- First macOS SDK build run 42527027717 caught a missing Foundation import in Shared/Rule.swift. Fixed in this checkpoint; SDK rebuild pending. Check the latest run before reporting compilation passed.
+- First macOS SDK build caught a missing Foundation import in Shared/Rule.swift; it was fixed.
+- **macOS SDK compilation PASSED** on tested source commit `9c355dd038e26863d5c0ad6ae2d8218610dc6be2`: host + embedded monitor, arm64/x86_64 simulator architectures, Xcode 16.4 / iOS Simulator SDK 18.5. Run: https://github.com/jamallarsen10-hub/gpt/actions/runs/42527210629 . The only warnings were skipped AppIntents metadata extraction because this app intentionally has no AppIntents dependency.
+- This handoff's final verification update changes documentation only; no source changes followed that passing SDK build. Do not confuse simulator compilation with a phone enforcement test.
 - Signed physical-device authorization/shielding NOT RUN. No installation or developer enrollment performed.
 
 ## Immediate next steps
 
-1. Inspect GitHub Actions for the branch/PR. Fix any actual compiler/generation errors and update this handoff with results. Use `bash scripts/build-macos.sh` from five-minute on a Mac.
+1. Compilation has passed. On the user's Mac, use `bash scripts/build-macos.sh` from five-minute to reproduce if needed. Do not repeat unrelated research or expand features; the next real gate is signed physical-device validation.
 2. Get eligible developer-team access before signed device work. A free Xcode Personal Team does not support Family Controls (development). Apple lists standard membership at USD $99/year. Do not purchase or remove required entitlements to pretend it works.
 3. Set unique bundle prefix/App Group/team in git-ignored `ios/Signing.local.xcconfig`; register Family Controls and identical App Group for host/extension. See ios/README.md.
 4. Test on the actual iPhone OS using docs/ACCEPTANCE.md: continuous/4.9-second sessions, host termination/reopen, reboot, midnight, callback ordering, lock contention, permission recovery. Record actual delay.
@@ -40,3 +42,9 @@ Repository: `jamallarsen10-hub/gpt`, branch `codex/five-minute-limiter`, folder 
 ## Checkpoint discipline
 
 Update HANDOFF.md before context/quota boundaries and push a coherent commit. Agents cannot reliably inspect remaining account quota, so checkpoint by milestones. Never label unrun SDK/device checks passed. No personal usage records, tokens, keys, provisioning profiles or passcodes in GitHub.
+
+## Review links
+
+- Draft PR: https://github.com/jamallarsen10-hub/gpt/pull/1
+- Source: https://github.com/jamallarsen10-hub/gpt/tree/codex/five-minute-limiter/five-minute
+- Claude entry: `five-minute/CLAUDE.md` on the same branch.

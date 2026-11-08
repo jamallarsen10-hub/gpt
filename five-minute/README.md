@@ -14,6 +14,8 @@ Confirmed setup: Mac available, no paid developer account, trusted person can ho
 
 iPhone only. No Android, accounts, backend, analytics, React Native bridge or custom shield extensions.
 
+**Verified:** app and embedded monitor compile with Xcode 16.4 against the iOS 18.5 simulator SDK; all 12 calendar-policy checks pass. [Build evidence](https://github.com/jamallarsen10-hub/gpt/actions/runs/42527210629). Signed real-iPhone authorization and shielding remain untested.
+
 ## Start here
 
 - [Product decisions and architecture](docs/DESIGN.md)
