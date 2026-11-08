@@ -1,42 +1,42 @@
 # Handoff — 2026-11-08
 
-## User goal and latest scope
+## Confirmed goal
 
-Build an open-source five-minute daily Instagram limiter, publish code to GitHub so Claude can contribute, and leave durable handoffs before context/quota boundaries. User clarified: **Apple/iPhone only** and **lean design first, prove enforcement before extra features**.
+Native iPhone-only focus app: 300 cumulative seconds daily, choose Instagram, then Apple system shield until the next day. Only the native app should be shielded. No Android, backend, analytics, widgets or custom shield/action extensions. User has a Mac, no paid Apple Developer account, and accepts having a trusted person hold the system Screen Time passcode. Build lean and prove enforcement before expanding.
 
-## Current checkpoint
+## Current implementation checkpoint
 
-Design/contract and engineering instructions written. Native source implementation has not started. No app is installed, compiled or device-tested yet. The Android design was removed immediately after the iPhone-only clarification.
+Native source is complete as a baseline: SwiftUI setup/status, individual FamilyControls authorization, validation of one application token, fixed daily DeviceActivity schedule/event with includesPastActivity, named ManagedSettings shield, atomic data-protected App Group files, process lock, persisted exhaustion, permission-loss selection renewal, retryable registration, and callback diagnostics. Both targets have explicit Info.plist and entitlements. XcodeGen project, build scripts, 12 calendar-policy checks and physical-device acceptance checklist are included.
 
-Repository: `jamallarsen10-hub/gpt`, dedicated branch `codex/five-minute-limiter`, isolated `five-minute/` folder. Root files are an unrelated existing project; preserve them. Connected GitHub tools can publish files/branches but do not expose repository creation. Browser repository creation requires sign-in. Use the connected branch rather than blocking on login. A standalone repository can be made later if wanted.
+Repository: `jamallarsen10-hub/gpt`, branch `codex/five-minute-limiter`, folder `five-minute/`. Root JavaScript files are an unrelated existing project: preserve them. GitHub connector does not expose repository creation; this isolated branch avoids a browser sign-in blocker. `.github/workflows/five-minute.yml` adds a macOS unsigned SDK build plus policy checks for this folder.
 
-## Clarifications pending
+## Verification
 
-User explicitly invited questions. Ask whether a trusted person can hold an override passcode, what Mac/Apple Developer access exists, and whether Instagram web should also be blocked. These affect enforcement/deployment but do not require Android or a backend.
+- Portable manifest/source structure check passed with `bash five-minute/scripts/check.sh` in Linux.
+- Python validator syntax check passed.
+- Swift policy tests were SKIPPED locally: Linux runtime has no swiftc.
+- iOS SDK compilation NOT YET RUN at this checkpoint; inspect macOS CI after publishing.
+- Signed physical-device authorization/shielding NOT RUN. No installation or developer enrollment performed.
 
-## Next actions
+## Immediate next steps
 
-1. Read user answers and DESIGN.md. Surface the simpler built-in Screen Time + trusted-person passcode option if it meets the goal.
-2. Implement native SwiftUI host + one DeviceActivityMonitor extension using FamilyControls and ManagedSettings. iOS 17.4+ permits includesPastActivity. Exactly one selected application token; no categories.
-3. Include App Group atomic persistence and shared process locking; no in-app time reset or monitor restart on ordinary launches.
-4. Add XcodeGen project.yml, Info.plist/entitlements, error/status UI, policy checks and real-device acceptance plan.
-5. Compile on macOS if available (this runtime is Linux with Java, no Xcode or Swift). Do not label unrun compilation/device checks passed. A macOS GitHub Actions check may be useful if workflow writes are permitted.
-6. Publish coherent source and updated handoff using GitHub tree/commit/ref tools, then open a reviewable draft PR and give user Claude entry links.
+1. Inspect GitHub Actions for the branch/PR. Fix any actual compiler/generation errors and update this handoff with results. Use `bash scripts/build-macos.sh` from five-minute on a Mac.
+2. Get eligible developer-team access before signed device work. A free Xcode Personal Team does not support Family Controls (development). Apple lists standard membership at USD $99/year. Do not purchase or remove required entitlements to pretend it works.
+3. Set unique bundle prefix/App Group/team in git-ignored `ios/Signing.local.xcconfig`; register Family Controls and identical App Group for host/extension. See ios/README.md.
+4. Test on the actual iPhone OS using docs/ACCEPTANCE.md: continuous/4.9-second sessions, host termination/reopen, reboot, midnight, callback ordering, lock contention, permission recovery. Record actual delay.
+5. User/trusted person can configure Apple's own Screen Time passcode directly on iPhone as a separate commitment layer. Do not create an in-app PIN or ask to see the system PIN. iOS 27 uses newer Time Allowances/Passcode & Management terminology: verify current settings before instructions.
 
-## Verification so far
+## Important limits
 
-- Verified repository permissions and branch creation via GitHub connector.
-- Inspected official Apple docs for DeviceActivityEvent, minimum 15-minute schedule, FamilyActivitySelection opaque tokens, Family Controls development/distribution entitlements.
-- Verified user-provided public reference repositories exist. Have not copied code or relied on their implementation details.
-- No tests/builds run. A Gradle download was initiated before the scope changed; ignore `/tmp/fiveminute-tools` and do not revive Android work.
+- The app uses individual authorization on an adult's own iPhone. A trusted person holding a system passcode does not transform this into child/MDM authorization or guarantee revocation/deletion resistance.
+- No app-side monotonic timer can observe another app's iOS foreground activity. Apple counts use and delivers callbacks, without a hard real-time guarantee.
+- One opaque token is enforced, but the user must choose Instagram. No fabricated bundle-ID-to-token conversion.
+- Schedule is daily midnight–23:59:59 (>=15 minutes); threshold is separately 300 seconds. An existing shield is not cleared at interval end; final-second unexhausted monitoring gap is documented.
+- No explicit web-domain shield is configured. Apple may include associated website use in an application's activity event; perfectly app-only measurement cannot be guaranteed.
+- Existing shields remain on storage errors. Lost/corrupt selection cannot reconstruct opaque tokens. A file lock serializes short operations; startMonitoring/authorization never run under it. Device tests must cover contention and callback ordering.
+- Permission loss observed by the host requires new token selection after reauthorization. Revocation while the host never runs is a remaining owner bypass.
+- Clock/timezone manipulation, reinstall, other devices and Apple OS regressions are not solved.
 
-## Nonnegotiable technical corrections
+## Checkpoint discipline
 
-- Individual authorization allows revocation/deletion. Do not promise un-bypassable.
-- iOS counts usage in the OS; CACurrentMediaTime cannot track another app while this host is suspended.
-- Select opaque token via FamilyActivityPicker; do not fabricate Instagram bundle-ID-to-token conversion.
-- DeviceActivity daily schedule is distinct from its five-minute usage threshold.
-- Apple callback latency and current OS behavior require physical-device validation.
-- Apple signing/App Groups and Family Controls capability are required for host and extension; distribution approval is needed for TestFlight/App Store.
-
-Update this file at each coherent milestone. Account usage quota is not visible here, so checkpoint proactively.
+Update HANDOFF.md before context/quota boundaries and push a coherent commit. Agents cannot reliably inspect remaining account quota, so checkpoint by milestones. Never label unrun SDK/device checks passed. No personal usage records, tokens, keys, provisioning profiles or passcodes in GitHub.

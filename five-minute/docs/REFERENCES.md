@@ -13,6 +13,12 @@ Prefer official API docs over snippets from memory. These support the design; ba
 - [Configuring Family Controls](https://developer.apple.com/documentation/xcode/configuring-family-controls) — entitlement/capability and profiles on host/extension.
 - [Distribution entitlement requests](https://developer.apple.com/documentation/familycontrols/requesting-the-family-controls-entitlement) — separate approval for app and Screen Time extension targets.
 - [WWDC22 Screen Time APIs](https://developer.apple.com/videos/play/wwdc2022/110336/) — individual authorization differs from parental controls.
+- [Supported capabilities by membership](https://developer.apple.com/help/account/reference/supported-capabilities-ios/) — Family Controls (development) is available for Apple Developer Program teams, not a free Personal Team. The HTML table's Family Controls row has a check in ADP and empty free/enterprise cells; plain-text extraction can lose these check icons.
+- [Developer account / Personal Team](https://developer.apple.com/help/account/basics/about-your-developer-account) — basic free device testing has seven-day provisioning, but that does not grant advanced capabilities.
+- [Program membership price](https://developer.apple.com/programs/whats-included) — USD $99 per membership year, local pricing may differ.
+- [Current Screen Time passcode instructions](https://support.apple.com/en-us/126533) — iOS 27 uses Passcode & Management → Lock Screen Time Settings on your own device.
+- [iOS 27 Time Allowances and Schedules](https://support.apple.com/guide/iphone/set-schedules-and-time-allowances-iphb0c7313c9/27/ios/27) — new terminology differs from older App Limits/Downtime. Do not give an outdated exact settings path.
+- [Earlier App Limits instructions](https://support.apple.com/guide/iphone/set-schedules-with-screen-time-iphb0c7313c9/ios) — individual-app selection; check the phone's actual OS before applying steps.
 
 ## Open-source references supplied by user
 

@@ -10,6 +10,8 @@ A lean native iPhone app: five cumulative minutes of Instagram per day, then App
 4. Shield the selected app until the next day. No snooze, extra time, or in-app reset.
 5. Show permission/monitoring health and errors, without inventing an exact live countdown.
 
+Confirmed setup: Mac available, no paid developer account, trusted person can hold a system Screen Time passcode. **Free Personal Teams cannot provision Family Controls.** Source and an unsigned SDK build can be prepared now; a signed device test needs eligible developer-team access. No purchase has been made.
+
 iPhone only. No Android, accounts, backend, analytics, React Native bridge or custom shield extensions.
 
 ## Start here
@@ -22,7 +24,7 @@ iPhone only. No Android, accounts, backend, analytics, React Native bridge or cu
 
 ## Enforcement limits
 
-An ordinary self-installed app cannot be un-bypassable. Apple’s individual authorization permits revocation and app deletion. A trusted-person Screen Time setup can add friction; parental/supervised deployment is a separate model. OS usage counting and callback delivery are not a millisecond or hard real-time guarantee. Instagram web, other devices and reinstall are outside this native-app rule.
+An ordinary self-installed app cannot be un-bypassable. Apple’s individual authorization permits revocation and app deletion. A trusted-person Screen Time setup is separate from this app and can add friction; parental/supervised deployment is a different model. OS counting and callback delivery are not a millisecond or hard real-time guarantee. No website shield is configured, although Apple may count associated website use in the application usage event. Other devices and reinstall are outside the rule.
 
 ## Folder structure
 

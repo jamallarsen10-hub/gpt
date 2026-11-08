@@ -11,4 +11,5 @@
 **/*.keystore
 **/*.jks
 **/.env
+**/Signing.local.xcconfig
 **/__pycache__/

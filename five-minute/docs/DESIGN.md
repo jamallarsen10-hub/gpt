@@ -24,9 +24,11 @@ The extension records exhaustion and sets a named ManagedSettingsStore shield. A
 
 Selection/configuration and exhaustion live in separate atomic files. Missing/corrupt state reports a fault; the app leaves existing shields intact. It cannot reconstruct an opaque token if the selection is lost. No app-side CACurrentMediaTime counter: it cannot observe Instagram foreground use. No extensions for analytics, customized shields, widgets or background tasks.
 
-## Unresolved deployment choice
+## Confirmed deployment choices
 
-Baseline uses individual authorization on the user’s own iPhone. This is a commitment aid, not protection against the phone owner. Trusted-person passcode arrangements may add friction; a Family Sharing child or supervised/MDM deployment requires a separate design. Do not switch authorization models without checking the user’s answer and Apple requirements.
+User has a Mac, no paid developer account, wants the Instagram native app only, and agrees that a trusted person can hold the system Screen Time passcode. Baseline uses individual authorization on the adult user's own iPhone. It does not implement an in-app override passcode. System settings are configured separately and the app cannot set Apple's passcode.
+
+A free Personal Team cannot provision Family Controls (development), so a paid/eligible developer team is a device-build dependency. Unsigned simulator compilation can proceed without it. No enrollment or purchase is authorized or performed here. A Family Sharing child or supervised/MDM deployment is a different model; do not change the adult's account type to make an API work.
 
 ## Known limits
 
@@ -36,6 +38,7 @@ Baseline uses individual authorization on the user’s own iPhone. This is a com
 - The schedule has a final-second gap. Existing shields stay in place; unexhausted use during that second is outside the event schedule.
 - App selection is opaque: exactly one token is enforced, but the person must choose Instagram.
 - Instagram in a browser and other devices are not covered by the native-app selection.
+- Apple may implicitly count an associated website in the application activity event, even though this app configures no website shields. App-only shielding is deliberate; app-only measurement is not guaranteed.
 - Data protection can delay file access until first unlock following a reboot.
 
 ## Gate before adding features
