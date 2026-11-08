@@ -14,8 +14,8 @@ Repository: `jamallarsen10-hub/gpt`, branch `codex/five-minute-limiter`, folder 
 
 - Portable manifest/source structure check passed with `bash five-minute/scripts/check.sh` in Linux.
 - Python validator syntax check passed.
-- Swift policy tests were SKIPPED locally: Linux runtime has no swiftc.
-- iOS SDK compilation NOT YET RUN at this checkpoint; inspect macOS CI after publishing.
+- Swift policy tests were SKIPPED locally: Linux runtime has no swiftc. macOS CI ran and PASSED all 12 policy checks using Xcode 16.4.
+- First macOS SDK build run 42527027717 caught a missing Foundation import in Shared/Rule.swift. Fixed in this checkpoint; SDK rebuild pending. Check the latest run before reporting compilation passed.
 - Signed physical-device authorization/shielding NOT RUN. No installation or developer enrollment performed.
 
 ## Immediate next steps
