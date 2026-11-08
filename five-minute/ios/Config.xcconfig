@@ -1,0 +1,7 @@
+// Override these with unique registered identifiers before a signed device build.
+FM_BUNDLE_PREFIX = dev.fiveminute
+FM_APP_GROUP = group.dev.fiveminute.focus
+DEVELOPMENT_TEAM =
+
+// Keep real account identifiers/signing choices out of the shared repository.
+#include? "Signing.local.xcconfig"

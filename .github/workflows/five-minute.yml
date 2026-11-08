@@ -1,0 +1,25 @@
+name: Five Minute iOS
+on:
+  push:
+    branches: ["codex/five-minute-limiter"]
+    paths: ["five-minute/**", ".github/workflows/five-minute.yml"]
+  pull_request:
+    paths: ["five-minute/**", ".github/workflows/five-minute.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: five-minute-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show Xcode toolchain
+        run: xcodebuild -version
+      - name: Install XcodeGen
+        run: brew list xcodegen >/dev/null 2>&1 || brew install xcodegen
+      - name: Check policy and compile app plus extension
+        run: bash five-minute/scripts/build-macos.sh
